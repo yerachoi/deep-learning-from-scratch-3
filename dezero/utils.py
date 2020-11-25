@@ -68,11 +68,10 @@ def plot_dot_graph(output, verbose=True, to_file='graph.png'):
     with open(graph_path, 'w') as f:
         f.write(dot_graph)
     
-    # call dot command
+    # call dot command; edited to account for spaces in graph_path
     extension = os.path.splitext(to_file)[1][1:]
     # cmd = 'dot {} -T {} -o {}'.format(graph_path, extension, to_file)
     cmd = 'dot "{}" -T {} -o {}'.format(graph_path, extension, to_file)
-    print(cmd)
     # subprocess.run(cmd, shell=True)
     subprocess.run(r'{}'.format(cmd), shell=True)
 
