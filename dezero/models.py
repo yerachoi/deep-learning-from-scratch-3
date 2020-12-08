@@ -1,4 +1,6 @@
 from dezero import Layer
+import dezero.functions as F
+import dezero.layers as L
 from dezero import utils
 
 
