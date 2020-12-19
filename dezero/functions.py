@@ -477,6 +477,9 @@ def clip(x, x_min, x_max):
     return Clip(x_min, x_max)(x)
 
 
+# =============================================================================
+# accuracy / dropout / batch_norm / embed_id
+# =============================================================================
 def accuracy(y, t):
     y, t = as_variable(y), as_variable(t)
 
@@ -484,3 +487,16 @@ def accuracy(y, t):
     result = (pred == t.data)
     acc = result.mean()
     return Variable(as_array(acc))
+
+
+def dropout(x, dropout_ratio=0.5):
+    x = as_variable(x)
+
+    if dezero.Config.train:
+        xp = cuda.get_array_module(x)
+        mask = xp.random.rand(*x.shape) > dropout_ratio
+        scale = xp.array(1.0 - dropout_ratio).astype(x.dtype)
+        y = x * mask / scale
+        return y
+    else:
+        return x
